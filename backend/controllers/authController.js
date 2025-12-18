@@ -262,11 +262,11 @@ export const requestPasswordReset = async (req, res) => {
     await user.save();
 
     // In production, send email with reset link
-    // For now, return the token (in production, this would be sent via email)
+    // For now, return success message (token would be sent via email in production)
     res.status(200).json({
       success: true,
-      message: 'Password reset token generated',
-      resetToken // Remove this in production
+      message: 'If the email exists, a password reset link has been sent'
+      // DO NOT return resetToken in production - it should be sent via email
     });
   } catch (error) {
     res.status(500).json({

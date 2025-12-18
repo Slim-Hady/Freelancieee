@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 
 const AuthContext = createContext(null);
 
@@ -30,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   // Load user profile
   const loadUser = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/auth/profile');
+      const response = await axios.get(API_ENDPOINTS.auth.profile);
       if (response.data.success) {
         setUser(response.data.user);
       }
@@ -46,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (name, email, password, role) => {
     try {
       setError(null);
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post(API_ENDPOINTS.auth.register, {
         name,
         email,
         password,
@@ -71,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setError(null);
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(API_ENDPOINTS.auth.login, {
         email,
         password
       });
@@ -102,7 +103,7 @@ export const AuthProvider = ({ children }) => {
   const updateProfile = async (profileData) => {
     try {
       setError(null);
-      const response = await axios.put('http://localhost:5000/api/auth/profile', profileData);
+      const response = await axios.put(API_ENDPOINTS.auth.profile, profileData);
 
       if (response.data.success) {
         setUser(response.data.user);
@@ -119,7 +120,7 @@ export const AuthProvider = ({ children }) => {
   const changePassword = async (currentPassword, newPassword) => {
     try {
       setError(null);
-      const response = await axios.put('http://localhost:5000/api/auth/change-password', {
+      const response = await axios.put(API_ENDPOINTS.auth.changePassword, {
         currentPassword,
         newPassword
       });

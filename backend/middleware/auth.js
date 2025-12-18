@@ -1,8 +1,17 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-// Get JWT secret from environment or use default for development
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+// Get JWT secret from environment - REQUIRED in production
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  console.warn('WARNING: JWT_SECRET is not set! Using insecure default for development only.');
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SECRET must be set in production environment!');
+  }
+}
+
+const JWT_SECRET_FINAL = JWT_SECRET || 'dev-secret-key-not-for-production';
 
 // Middleware to protect routes - requires valid JWT token
 export const authenticate = async (req, res, next) => {
@@ -18,7 +27,7 @@ export const authenticate = async (req, res, next) => {
     }
 
     // Verify token
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET_FINAL);
     
     // Find user
     const user = await User.findById(decoded.userId).select('-password');
@@ -81,7 +90,7 @@ export const authorize = (...roles) => {
 export const generateToken = (userId) => {
   return jwt.sign(
     { userId },
-    JWT_SECRET,
+    JWT_SECRET_FINAL,
     { expiresIn: '7d' } // Token expires in 7 days
   );
 };
