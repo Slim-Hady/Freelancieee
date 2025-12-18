@@ -17,19 +17,25 @@ import {
   resetRequestValidation,
   resetPasswordValidation
 } from '../middleware/validation.js';
+import {
+  registerLimiter,
+  loginLimiter,
+  passwordResetLimiter,
+  authLimiter
+} from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
-// Public routes
-router.post('/register', registerValidation, register);
-router.post('/login', loginValidation, login);
-router.post('/password-reset-request', resetRequestValidation, requestPasswordReset);
-router.post('/password-reset', resetPasswordValidation, resetPassword);
+// Public routes with rate limiting
+router.post('/register', registerLimiter, registerValidation, register);
+router.post('/login', loginLimiter, loginValidation, login);
+router.post('/password-reset-request', passwordResetLimiter, resetRequestValidation, requestPasswordReset);
+router.post('/password-reset', passwordResetLimiter, resetPasswordValidation, resetPassword);
 
-// Protected routes (require authentication)
-router.get('/profile', authenticate, getProfile);
-router.put('/profile', authenticate, updateProfile);
-router.put('/change-password', authenticate, changePasswordValidation, changePassword);
-router.delete('/account', authenticate, deleteAccount);
+// Protected routes (require authentication) with general rate limiting
+router.get('/profile', authLimiter, authenticate, getProfile);
+router.put('/profile', authLimiter, authenticate, updateProfile);
+router.put('/change-password', authLimiter, authenticate, changePasswordValidation, changePassword);
+router.delete('/account', authLimiter, authenticate, deleteAccount);
 
 export default router;
