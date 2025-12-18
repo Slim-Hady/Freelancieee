@@ -8,7 +8,7 @@ class PaymentProcessor {
 // Credit Card Processor
 class CreditCardProcessor extends PaymentProcessor {
   processPayment(amount) {
-    const transactionId = `CC-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const transactionId = `CC-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     return {
       success: true,
       message: `Credit Card payment of $${amount} processed successfully`,
@@ -21,7 +21,7 @@ class CreditCardProcessor extends PaymentProcessor {
 // PayPal Processor
 class PayPalProcessor extends PaymentProcessor {
   processPayment(amount) {
-    const transactionId = `PP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const transactionId = `PP-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     return {
       success: true,
       message: `PayPal payment of $${amount} processed successfully`,
@@ -34,7 +34,7 @@ class PayPalProcessor extends PaymentProcessor {
 // Bank Transfer Processor
 class BankTransferProcessor extends PaymentProcessor {
   processPayment(amount) {
-    const transactionId = `BT-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const transactionId = `BT-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     return {
       success: true,
       message: `Bank Transfer of $${amount} initiated successfully`,
@@ -47,7 +47,7 @@ class BankTransferProcessor extends PaymentProcessor {
 // Crypto Processor
 class CryptoProcessor extends PaymentProcessor {
   processPayment(amount) {
-    const transactionId = `CRYPTO-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    const transactionId = `CRYPTO-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     return {
       success: true,
       message: `Cryptocurrency payment of $${amount} processed successfully`,

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import PaymentComponent from './components/PaymentComponent';
 import JobDashboard from './components/JobDashboard';
 import NotificationSettings from './components/NotificationSettings';
