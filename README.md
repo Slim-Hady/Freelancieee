@@ -10,11 +10,15 @@ Freelancieee implements all core requirements for a complete freelance marketpla
 
 ### ✅ Completed Requirements
 
-1. **User Authentication & Authorization**
-   - Login/SignUp with email and password
+1. **User Authentication & Authorization** ✨ **PRODUCTION-READY**
+   - Complete registration and login system with JWT
+   - Password hashing with bcrypt
    - Role-based access (Freelancer/Client)
-   - Session management
+   - Session management with JWT tokens
    - User profile management
+   - Password change functionality
+   - Password reset capability
+   - Protected API routes
 
 2. **Client Job Management**
    - Post new job listings
@@ -149,6 +153,13 @@ Edit `backend/.env` file:
 ```env
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/freelancieee
+JWT_SECRET=your-secret-key-change-in-production
+```
+
+**Important:** Generate a secure JWT secret for production:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
 ```
 
 ### Running the Application
@@ -183,30 +194,60 @@ Then open your browser to: **http://localhost:3000**
 
 ## 📋 Usage Guide
 
-### Step 1: Create Users
-1. Navigate to the **User Management** tab
-2. Click "Create New User"
-3. Add both Freelancers and Clients
+### Getting Started
 
-### Step 2: Create Jobs (Facade Pattern Demo)
+1. **Open the application** at http://localhost:3000
+2. **Create an account** by clicking "Register here"
+3. **Choose your role**: Freelancer or Client
+4. **Complete registration** with your details
+5. **You're logged in!** Access all features from the dashboard
+
+### For New Users
+
+#### Step 1: Register Your Account
+1. Navigate to the application
+2. Click "Register here" on the login page
+3. Fill in:
+   - Full name
+   - Email address
+   - Choose role (Freelancer or Client)
+   - Create a password (min 6 characters with a number)
+4. Click "Create Account"
+5. You'll be automatically logged in
+
+#### Step 2: Manage Your Profile
+1. Click on "My Profile" in the navigation
+2. Update your information:
+   - Add a bio
+   - List your skills (comma-separated)
+   - Set notification preferences
+3. Click "Save Changes"
+
+#### Step 3: Change Password (Security Tab)
+1. Go to "My Profile"
+2. Click on "Security" tab
+3. Enter current and new password
+4. Click "Change Password"
+
+### Step 4: Create Jobs (Facade Pattern Demo)
 1. Go to the **Jobs (Facade)** tab
 2. Click "Create New Job"
 3. Fill in job details and select a client
 4. The JobFacade coordinates multiple subsystems behind the scenes
 
-### Step 3: Apply to Jobs
+### Step 5: Apply to Jobs
 1. Select a freelancer from the dropdown
 2. Click "Apply to Job" on any open job
 3. The application is processed through the Facade pattern
 
-### Step 4: Process Payments (Factory Pattern Demo)
+### Step 6: Process Payments (Factory Pattern Demo)
 1. Navigate to **Payments (Factory)** tab
 2. Select a payment type (Credit Card, PayPal, Bank Transfer, or Crypto)
 3. Enter an amount and optional user details
 4. Click "Process Payment"
 5. The Factory pattern creates the appropriate payment processor
 
-### Step 5: Send Notifications (Strategy Pattern Demo)
+### Step 7: Send Notifications (Strategy Pattern Demo)
 1. Go to **Notifications (Strategy)** tab
 2. Select a notification method (Email, SMS, Push, or In-App)
 3. Enter recipient and message
@@ -217,6 +258,30 @@ Then open your browser to: **http://localhost:3000**
 ### Complete API Reference
 
 #### Authentication & User Management
+
+**Authentication Endpoints** (New!)
+- `POST /api/auth/register` - Register a new user
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "role": "freelancer"
+  }
+  ```
+- `POST /api/auth/login` - Login user
+  ```json
+  {
+    "email": "john@example.com",
+    "password": "password123"
+  }
+  ```
+- `GET /api/auth/profile` - Get current user profile (requires auth)
+- `PUT /api/auth/profile` - Update user profile (requires auth)
+- `PUT /api/auth/change-password` - Change password (requires auth)
+- `POST /api/auth/password-reset-request` - Request password reset
+- `POST /api/auth/password-reset` - Reset password with token
+- `DELETE /api/auth/account` - Delete account (requires auth)
 
 **User Operations**
 - `POST /api/users` - Create a new user (Freelancer or Client)
@@ -749,10 +814,18 @@ This project demonstrates a complete freelance marketplace implementation using 
 This project serves as a comprehensive example of:
 - **Design Patterns**: Factory, Facade, and Strategy patterns in real-world applications
 - **MERN Stack**: Full-stack JavaScript development
+- **Authentication & Security**: Production-ready JWT authentication with bcrypt password hashing
 - **RESTful API**: Well-structured API design
 - **Database Design**: MongoDB schema relationships
-- **Modern React**: Hooks and functional components
+- **Modern React**: Hooks and functional components with Context API
 - **Software Architecture**: Separation of concerns and clean code principles
+
+## 📚 Additional Documentation
+
+- **[AUTHENTICATION.md](AUTHENTICATION.md)** - Complete authentication system documentation
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture and design patterns
+- **[TESTING.md](TESTING.md)** - Testing guidelines
+- **[SECURITY.md](SECURITY.md)** - Security considerations
 
 ## 📄 License
 
