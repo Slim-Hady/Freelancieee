@@ -1,5 +1,7 @@
 # Freelancieee
 
+This project for System Analysis and design course the code is vibe coding after giving the AI our requirment - designs (Class diagram With solid - Design pattern ) - Architecture - Use case and prompt with all specific requirment 
+
 **Freelancieee** is an online platform designed to connect skilled freelancers with businesses and individuals for project-based work. It allows employers to post jobs, discover top talent, and manage contracts, while freelancers can find opportunities and get paid securely. The system simplifies the entire freelance workflow, from hiring and collaboration to secure payments and performance reviews.
 
 This production-ready MERN stack application demonstrates industry-standard design patterns (Factory, Facade, and Strategy) and implements a complete freelance marketplace system with authentication, job management, payments, and real-time notifications.
