@@ -2,7 +2,7 @@ import User from '../models/User.js';
 
 export const createUser = async (req, res) => {
   try {
-    const { name, email, role, preferredNotification } = req.body;
+    const { name, email, role, preferredNotification, password } = req.body;
 
     if (!name || !email || !role) {
       return res.status(400).json({
@@ -11,9 +11,13 @@ export const createUser = async (req, res) => {
       });
     }
 
+    // If password is not provided, generate a temporary one
+    const userPassword = password || Math.random().toString(36).slice(-8);
+
     const user = new User({
       name,
       email,
+      password: userPassword,
       role,
       preferredNotification: preferredNotification || 'email'
     });
@@ -23,7 +27,13 @@ export const createUser = async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'User created successfully',
-      user
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        preferredNotification: user.preferredNotification
+      }
     });
   } catch (error) {
     if (error.code === 11000) {

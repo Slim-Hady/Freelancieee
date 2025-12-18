@@ -6,6 +6,7 @@ import paymentRoutes from './routes/paymentRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 // Routes
+app.use('/api/auth', authRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api', jobRoutes);
 app.use('/api', notificationRoutes);
@@ -30,8 +32,9 @@ app.use('/api', userRoutes);
 app.get('/', (req, res) => {
   res.json({
     message: 'Freelancieee API Server',
-    version: '1.0.0',
+    version: '2.0.0',
     endpoints: {
+      auth: '/api/auth/register (POST), /api/auth/login (POST), /api/auth/profile (GET, PUT), /api/auth/change-password (PUT), /api/auth/password-reset-request (POST), /api/auth/password-reset (POST)',
       payments: '/api/pay (POST), /api/payments (GET)',
       jobs: '/api/jobs (POST, GET), /api/jobs/:id (GET), /api/jobs/apply (POST), /api/jobs/assign (POST), /api/jobs/complete (POST)',
       notifications: '/api/notify (POST), /api/preference (POST)',
